@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, UnsubscriptionError, map } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { User } from '../model/user';
 import { PresenceService } from './presence.service';
+import { User } from '../model/user';
 
 @Injectable({
   providedIn: 'root',

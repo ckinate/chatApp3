@@ -12,20 +12,26 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using DatingApp.SignalR;
 using DatingApp.Services.UnitOfWork;
+using DatingApp.Logger;
 
 namespace DatingApp.Extensions
 {
     public static class ApplicationServiceExtensions
     {
         public static IServiceCollection AddApplicationService(
-            this IServiceCollection services, 
+            this IServiceCollection services,
                  IConfiguration configuration)
         {
-            services.AddDbContext<DataContext>(opt =>
+            //services.AddDbContext<DataContext>(opt =>
+            //{
+            //    opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+            //});
+            services.AddDbContext<DataContext>(option =>
             {
-                opt.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+                option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddCors();
+            services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
